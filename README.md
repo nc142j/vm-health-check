@@ -4,4 +4,4 @@ A bash script that checks key system parameters—CPU usage, memory, and disk sp
 
 # See Usage
 
-[Usage Instructions](usage.md)
+[Usage Instructions](docs/usage.md)
