@@ -1,0 +1,26 @@
+{
+  "repository": "vm-health-check",
+  "version": "1.0.0",
+  "description": "A bash script that checks key system parameters—CPU usage, memory, and disk space—and reports health status.",
+  "maintainer": {
+    "name": "Neo",
+    "email": "nc142j@gmail.com"
+  },
+  "scripts": [
+    {
+      "name": "health_check.sh",
+      "description": "A bash script that checks key system parameters—CPU usage, memory, and disk space—and reports health status.",
+      "usage": "",
+      "dependencies": []
+    }
+  ],
+  "docs": [
+    {
+      "name": "README.md",
+      "description": "Documentation for the health_check.sh script.",
+      "usage": "",
+      "dependencies": []
+    }
+  ],
+  "license": "MIT"
+}
