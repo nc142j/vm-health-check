@@ -20,6 +20,12 @@
       "description": "Documentation for the health_check.sh script.",
       "usage": "",
       "dependencies": []
+    },
+    {
+      "name": "usage.md",
+      "description": "Usage instructions for the health_check.sh script.",
+      "usage": "",
+      "dependencies": []
     }
   ],
   "license": "MIT"

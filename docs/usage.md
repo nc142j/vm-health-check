@@ -9,7 +9,7 @@ health_check.sh [OPTION] [SERVICES]
 ## Option (optional)
 
 - `--explain`, 
-    Explains how to use the services perameters/arguements.
+    Explains how to use the services parameter/arguements.
 
 ## Example
 
