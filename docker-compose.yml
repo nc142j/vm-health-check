@@ -1,0 +1,10 @@
+
+services:
+  vm-health-check:
+    image: alpine:latest
+    build: ./vm-health-check
+    container_name: vm-health-check
+    tty: true
+    volumes:
+      - ./:/vm-health-check/
+   
