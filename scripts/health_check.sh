@@ -1,5 +1,6 @@
 #!/bin/bash
 
+#services and their descriptions
 declare -A SERVICES=(
     ["cpu"]="cpu \t\t checks cpu metrics \t\t Usage: bash health_check.sh cpu"
     ["memory"]="memory \t\t checks memory metrics \t\t Usage: bash health_check.sh memory"
@@ -7,34 +8,68 @@ declare -A SERVICES=(
     ["all"]="all \t\t checks all metrics \t\t Usage: bash health_check.sh all"
 )
 
+# Thresholds
 HIGH_CPU_THRESHOLD=85
 HIGH_MEMORY_THRESHOLD=90
 MEDIUM_MEMORY_THRESHOLD=80
 HIGH_DISK_THRESHOLD=80
 
+# Log file setup
+LOG_DIR="log"
+LOG_FILE="$LOG_DIR/health_checks_$(date +%Y-%m-%d).log"
+RED='\033[0;31m'
+YELLOW='\033[1;33m'
+GREEN='\e[32m'
+NC='\033[0m' # No Color
+
+create_log_file() {
+    # Create log directory if it doesn't exist
+    [ ! -d "$LOG_DIR" ] && mkdir -p "$LOG_DIR"
+    # Create log file if it doesn't exist
+    [ ! -f "$LOG_FILE" ] && touch "$LOG_FILE"
+}
+
+write_to_log() {
+    local message="$1"
+    echo -e "$message" >> "$LOG_FILE"
+}
+
 check_cpu() {
-    echo "CPU Usage:"
+    cpu_message="===CPU Usage==="
+    echo "$cpu_message"
+    write_to_log "$cpu_message"
     cpu=$(top -bn1 | grep "Cpu(s)" | awk '{print $2 + $4}')
     echo "$cpu%"
+    write_to_log "$cpu%"
     # Remove any % and whitespace before passing to alert_check
     cpu_clean=$(echo "$cpu" | tr -d ' %')
     alert_check cpu "$cpu_clean"
 }
 
 check_memory() {
-    echo "Memory Usage:"
+    memory_message="===Memory Usage==="
+    echo "$memory_message"
+    write_to_log "$memory_message"
     memory=$(free -m | awk '/Mem:/ {print $3 "/" $2 "MB used"}')
     memory_percent=$(free | awk '/Mem:/ {printf("%.2f"), $3/$2 * 100}')
-    echo "$memory : ($memory_percent%)"
+    memory_text=$(echo "$memory : ($memory_percent%)")
+    echo "$memory_text"
+    write_to_log "$memory_text"
+    # Remove any % and whitespace before passing to alert_check
     memory_clean=$(echo "$memory_percent" | tr -d ' %')
     alert_check memory "$memory_clean"
 }
 
 check_disk() {
-    echo "Disk Usage:"
+    disk_message="===Disk Usage==="
+    echo "$disk_message"
+    write_to_log "$disk_message"
     disk=$(df -h / | awk 'NR==2 {print $5" used"}')
     disk_percent=$(df / | awk 'NR==2 {gsub("%","",$5); print $5}')
-    echo "$disk : ($disk_percent%)"
+    disk_text=$(echo "$disk : ($disk_percent%)")
+    echo "$disk_text"
+    write_to_log "$disk_text"
+    # Remove any % and whitespace before passing to alert_check
     disk_clean=$(echo "$disk" | tr -d ' %')
     alert_check disk "$disk_percent"
 }
@@ -43,23 +78,42 @@ alert_check() {
     case $1 in
         cpu)
             cpu_value="$2"
+            unset cpu_alert
             if (( $(echo "$cpu_value >= $HIGH_CPU_THRESHOLD" | bc -l) )); then
-                echo -e "\033[0;31mALERT: High CPU USAGE: Threshold is supposed to be less than: $HIGH_CPU_THRESHOLD%\033[0m"
+                cpu_alert=$(echo -e "${RED}ALERT: High CPU USAGE: Threshold is supposed to be less than: $HIGH_CPU_THRESHOLD${NC}")
+            else
+                cpu_alert=$(echo -e "${GREEN}CPU USAGE is Healthy.${NC}")
             fi
+            echo -e "$cpu_alert"
+            write_to_log "$cpu_alert"
+            unset cpu_alert
             ;;
         memory)
             memory_value="$2"
+            unset memory_alert
             if (( $(echo "$memory_value >= $HIGH_MEMORY_THRESHOLD" | bc -l) )); then
-                echo -e "\033[0;31mALERT: High MEMORY USAGE: Threshold is supposed be less than: $HIGH_MEMORY_THRESHOLD%\033[0m"
+                memory_alert=$(echo -e "${RED}ALERT: High MEMORY USAGE: Threshold is supposed be less than: $HIGH_MEMORY_THRESHOLD%${NC}")
+               
             elif (( $(echo "$memory_value >= $MEDIUM_MEMORY_THRESHOLD && $memory_value < $HIGH_MEMORY_THRESHOLD" | bc -l) )); then
-                echo -e "\033[1;33mWARNING: Medium MEMORY USAGE: Threshold is supposed to be less than: $MEDIUM_MEMORY_THRESHOLD%\033[0m"
+                memory_alert=$(echo -e "${YELLOW}WARNING: Medium MEMORY USAGE: Threshold is supposed to be less than: $MEDIUM_MEMORY_THRESHOLD%${NC}")
+            else
+                memory_alert=$(echo -e "${GREEN}MEMORY USAGE is Healthy.${NC}") 
             fi
+            echo -e "$memory_alert"
+            write_to_log "$memory_alert"
+            unset memory_alert
             ;;
         disk)
             disk_value="$2"
+            unset disk_alert
             if (( $(echo "$disk_value >= $HIGH_DISK_THRESHOLD" | bc -l) )); then
-                echo -e "\033[0;31mALERT: High DISK USAGE: Threshold is supposed to be less than: $HIGH_DISK_THRESHOLD%\033[0m"
+                disk_alert=$(echo -e "${RED}ALERT: High DISK USAGE: Threshold is supposed to be less than: $HIGH_DISK_THRESHOLD%${NC}")
+            else
+                disk_alert=$(echo -e "${GREEN}DISK USAGE is Healthy.${NC}")
             fi
+            echo -e "$disk_alert"
+            write_to_log "$disk_alert"
+            unset disk_alert
             ;;
         *)
             return
@@ -68,6 +122,9 @@ alert_check() {
 }
 
 main() {
+
+    create_log_file
+    echo "<---------------- $(date '+%Y-%m-%d %H:%M:%S') ----------------> " >> "$LOG_FILE"
 
     if [ $# -eq 0 ] || [ $# -ge 3 ]; then
         echo "The script has either not enough arguments or too many arguments."
