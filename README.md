@@ -4,7 +4,7 @@ A bash script that checks key system parameters—CPU usage, memory, and disk sp
 
 # Docker Container Usage
 
-To run the docker linux container, you must run the following command
+To run the docker linux container, you must run the following command:
 
 1. ```docker compose up --build -d```
 
