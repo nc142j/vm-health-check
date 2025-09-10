@@ -7,7 +7,7 @@ COPY . .
 RUN apk add --no-cache bash procps cronie
 
 # Add cron job to run health_check.sh every 5 minutes
-RUN echo "*/1 * * * * cd /vm-health-check && bash /vm-health-check/scripts/health_check.sh all" > /etc/crontabs/root
+RUN echo "*/15 * * * * cd /vm-health-check && bash /vm-health-check/scripts/health_check.sh all" > /etc/crontabs/root
 
 COPY entrypoint.sh /scripts/entrypoint.sh
 
