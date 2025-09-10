@@ -45,7 +45,7 @@ Shows the container health usage in ```health_check_(%Year-%Month-%Day).log```
 
 ## Example
 
-```cat
+```tail
 log/health_checks_2025-09-09.log 
 ```
 

@@ -6,7 +6,7 @@ A bash script that checks key system parameters—CPU usage, memory, and disk sp
 
 To run the docker linux container, you must run the following command
 
-1. ```docker compose up -d```
+1. ```docker compose up --build -d```
 
 ***Note: You can run the docker command assuming you have docker & docker desktop installed
 
