@@ -1,6 +1,6 @@
 {
   "repository": "vm-health-check",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A bash script that checks key system parameters—CPU usage, memory, and disk space—and reports health status.",
   "maintainer": {
     "name": "Neo",
