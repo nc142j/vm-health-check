@@ -10,7 +10,9 @@ To run the docker linux container, you must run the following command
 
 ***Note: You can run the docker command assuming you have docker & docker desktop installed
 
-Once Linux container is running, run to go inside the container:
+You check that the container is running by either the container tab in docker desktop or running: ```docker ps```
+
+Once Linux container is running, to go inside the container:
 
 2. ```docker exec -it vm-health-check bash```
 
@@ -21,7 +23,7 @@ Once Linux container is running, run to go inside the container:
 
 # Exit Container
 
-3. ```exit``` then press enter
+3. type ```exit``` then press enter
 
 # Stop Container
 
