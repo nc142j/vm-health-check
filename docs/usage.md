@@ -3,7 +3,7 @@
 To run the `health_check.sh` script, use the following command inside the scripts folder:
 
 ```bash
-health_check.sh [OPTION] [SERVICES]
+scripts/health_check.sh [OPTION] [SERVICES]
 ```
 
 ## Option (optional)
@@ -14,7 +14,7 @@ health_check.sh [OPTION] [SERVICES]
 ## Example
 
 ```bash
-health_check.sh --explain cpu
+scripts/health_check.sh --explain cpu
 ```
 
 This will run the health check on the cpu usage with verbose output and show how to run script with service parameter/arguement.
@@ -36,5 +36,16 @@ This will run the health check on the cpu usage with verbose output and show how
 ## Example
 
 ```bash
-health_check.sh cpu
+scripts/health_check.sh cpu
 ```
+
+## Logs
+
+Shows the container health usage in ```health_check_(%Year-%Month-%Day).log```
+
+## Example
+
+```cat
+log/health_checks_2025-09-09.log 
+```
+
