@@ -1,6 +1,6 @@
 {
   "repository": "vm-health-check",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "description": "A bash script that checks key system parameters—CPU usage, memory, and disk space—and reports health status.",
   "maintainer": {
     "name": "Neo",
@@ -26,7 +26,60 @@
       "description": "Usage instructions for the health_check.sh script.",
       "usage": "",
       "dependencies": []
+    },
+    {
+      "name": "CHANGELOG.md",
+      "description": "Tracks changes and updates made to the project over time.",
+      "usage": "",
+      "dependencies": []
     }
   ],
+  "log": [
+    {
+      "name": "health_check_%Y%m%d.log",
+      "description": "Log file for health_check.sh script.",
+      "usage": "",
+      "dependencies": []
+    }
+  ],
+  "vm-health-check": [
+    {
+      "name": "Dockerfile",
+      "description": "Dockerfile for building the vm-health-check container.",
+      "usage": "",
+      "dependencies": []
+    },
+    {
+      "name": "entrypoint.sh",
+      "description": "Entrypoint script for the Docker container.",
+      "usage": "",
+      "dependencies": []
+    }
+  ],
+  "docker-compose": 
+    {
+      "name": "docker-compose.yml",
+      "description": "Docker Compose file for setting up the vm-health-check service.",
+      "usage": "",
+      "dependencies": []
+    },
+  "gitignore": {
+    "name": ".gitignore",
+    "description": "Specifies files and directories to be ignored by Git.",
+    "usage": "",
+    "dependencies": []
+  },
+  "dockerfile": {
+    "name": ".dockerfile",
+    "description": "Specifies files and directories to be ignored by Docker.",
+    "usage": "",
+    "dependencies": []
+  },
+  "README": {
+    "name": "README.md",
+    "description": "Documentation for the vm-health-check project.",
+    "usage": "",
+    "dependencies": []
+  },
   "license": "MIT"
 }

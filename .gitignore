@@ -2,4 +2,4 @@
 /build/
 
 # Ignore log files
-/log/*.log
+#/log/*.log
