@@ -28,3 +28,6 @@ Once Linux container is running, to go inside the container:
 # Stop Container
 
 4. ```docker stop vm-health-check```
+
+# See Change Log
+[CHANGELOG](docs/CHANGELOG.md)
